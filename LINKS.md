@@ -6,66 +6,75 @@ Every official link used in this guide, in one place. Safe to paste into a video
 
 ---
 
-## Mullvad
+## Layer 1 — Mullvad VPN (IP protection)
 
 | What | Link |
 |---|---|
 | Homepage | <https://mullvad.net/> |
 | Create an account | <https://mullvad.net/en/account/create> |
 | Pricing | <https://mullvad.net/en/pricing> |
-| VPN downloads | <https://mullvad.net/en/download/vpn/> |
-| Browser downloads | <https://mullvad.net/en/download/browser/> |
+| Download — all platforms | <https://mullvad.net/en/download/vpn/> |
+| Download — Windows | <https://mullvad.net/en/download/vpn/windows> |
+| Download — macOS | <https://mullvad.net/en/download/vpn/macos> |
+| Download — Linux | <https://mullvad.net/en/download/vpn/linux> |
+| Download — Android | <https://mullvad.net/en/download/vpn/android> |
+| Verify app signature | <https://mullvad.net/en/help/verifying-signatures> |
 | Connection check | <https://mullvad.net/check> |
-| Verify VPN app signature | <https://mullvad.net/en/help/verifying-signatures> |
-| Verify browser signature | <https://mullvad.net/en/help/verifying-mullvad-browser-signature> |
 | Encrypted DNS | <https://mullvad.net/en/help/dns-over-https-and-dns-over-tls> |
-| Blog | <https://mullvad.net/en/blog> |
-| Help centre | <https://mullvad.net/en/help> |
-| Source code | <https://github.com/mullvad> |
-| Browser source | <https://github.com/mullvad/mullvad-browser> |
 
-## Tor
+## Layer 2 — Mullvad Browser (fingerprint protection)
 
 | What | Link |
 |---|---|
-| Homepage | <https://www.torproject.org/> |
-| Download | <https://www.torproject.org/download/> |
-| Am I using Tor? | <https://check.torproject.org/> |
-| Verify signature | <https://support.torproject.org/en/tor-browser/getting-started/verifying-tor-browser/> |
-| Support portal | <https://support.torproject.org/> |
-| Get bridges | <https://bridges.torproject.org/> |
-| Mirror (EFF) | <https://tor.eff.org/> |
-| Mirror (La Cebolla) | <https://lacebolla.net/> |
-| GetTor Telegram bot | <https://t.me/gettor_bot> |
-| GetTor by email | gettor@torproject.org |
-| Bridges by email | bridges@torproject.org |
+| Download — all platforms | <https://mullvad.net/en/download/browser/> |
+| Download — Windows | <https://mullvad.net/en/download/browser/windows> |
+| Download — macOS | <https://mullvad.net/en/download/browser/macos> |
+| Download — Linux | <https://mullvad.net/en/download/browser/linux> |
+| GitHub releases | <https://github.com/mullvad/mullvad-browser/releases> |
+| Source code | <https://github.com/mullvad/mullvad-browser> |
+| Verify browser signature | <https://mullvad.net/en/help/verifying-mullvad-browser-signature> |
+
+## Mullvad, generally
+
+| What | Link |
+|---|---|
+| Help centre | <https://mullvad.net/en/help> |
+| Blog | <https://mullvad.net/en/blog> |
+| All source code | <https://github.com/mullvad> |
+| The 2023 police search, no data seized | <https://mullvad.net/en/blog/2023/4/20/mullvad-vpn-was-subject-to-a-search-warrant-customer-data-not-compromised> |
+
+---
 
 ## Testing your setup
 
+| What | Tests | Link |
+|---|---|---|
+| IP and connection check | Layer 1 | <https://mullvad.net/check> |
+| DNS leak | Layer 1 | <https://browserleaks.com/dns> |
+| WebRTC leak | Layer 1 | <https://browserleaks.com/webrtc> |
+| Browser fingerprint | Layer 2 | <https://coveryourtracks.eff.org/> |
+| Detailed browser signals | Layer 2 | <https://browserleaks.com/> |
+
+## Verification tools
+
 | What | Link |
 |---|---|
-| Browser fingerprint | <https://coveryourtracks.eff.org/> |
-| Detailed browser leaks | <https://browserleaks.com/> |
-| WebRTC leak | <https://browserleaks.com/webrtc> |
-| DNS leak | <https://browserleaks.com/dns> |
-| IP and connection check | <https://mullvad.net/check> |
-| Tor check | <https://check.torproject.org/> |
-
-## Tools
-
-| What | Link |
-|---|---|
-| Gpg4win (Windows GPG) | <https://gpg4win.org/> |
+| Gpg4win (Windows) | <https://gpg4win.org/> |
 | GPG Suite (macOS) | <https://gpgtools.org/> |
 
-## Amnesic and hardened systems
+---
+
+## Beyond this setup
 
 | What | Link |
 |---|---|
+| Tor Browser | <https://www.torproject.org/download/> |
+| Tor support portal | <https://support.torproject.org/> |
 | Tails | <https://tails.net/> |
 | Whonix | <https://www.whonix.org/> |
 | Qubes OS | <https://www.qubes-os.org/> |
 | GrapheneOS | <https://grapheneos.org/> |
+| F-Droid | <https://f-droid.org/> |
 
 ## Search engines
 
@@ -99,19 +108,11 @@ Every official link used in this guide, in one place. Safe to paste into a video
 |---|---|
 | EFF Surveillance Self-Defense | <https://ssd.eff.org/> |
 | Privacy Guides | <https://www.privacyguides.org/> |
-| Tor support portal | <https://support.torproject.org/> |
 | Whonix documentation | <https://www.whonix.org/wiki/Documentation> |
-| F-Droid | <https://f-droid.org/> |
 
 ---
 
 ## Key fingerprints
-
-**Tor Browser Developers** — signs both Tor Browser and Mullvad Browser:
-
-```
-EF6E 286D DA85 EA2A 4BA7 DE68 4E2C 6E87 9329 8290
-```
 
 **Mullvad (code signing)** — signs the Mullvad VPN app:
 
@@ -119,4 +120,11 @@ EF6E 286D DA85 EA2A 4BA7 DE68 4E2C 6E87 9329 8290
 A119 8702 FC3E 0A09 A9AE 5B75 D5A1 D4F2 66DE 8DDF
 ```
 
-Always cross-check these against the official sites before trusting them.
+**Tor Browser Developers** — signs Mullvad Browser, because the Tor Project co-develops it:
+
+```
+EF6E 286D DA85 EA2A 4BA7 DE68 4E2C 6E87 9329 8290
+```
+
+Always cross-check these against the official sites before trusting them. See
+[docs/verify-downloads.md](docs/verify-downloads.md).

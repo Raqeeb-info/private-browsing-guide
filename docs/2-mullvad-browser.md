@@ -1,13 +1,20 @@
-# Setting up Mullvad Browser
+# Layer 2 — Mullvad Browser (fingerprint protection)
 
 *Verified against Mullvad Browser 15.0.21, September 2026.*
 
-Mullvad Browser is free and does **not** require a Mullvad VPN subscription — though it is
-designed assuming you have some VPN in front of it.
+**What this layer does:** stops websites identifying you by your browser's fingerprint —
+screen size, fonts, GPU, timezone, canvas rendering and dozens of other signals that a VPN
+does nothing about.
 
-Detail worth mentioning on camera: Mullvad Browser and Tor Browser ship the **same version
-numbers** (both 15.0.21 as of writing) because they are built from the same codebase by the
-same people. Mullvad Browser is Tor Browser with the Tor client removed.
+**What it does not do:** hide your IP address. That is [Layer 1](1-mullvad-vpn.md).
+
+Mullvad Browser is free and does **not** require a Mullvad VPN subscription — but it is built
+on the assumption that you have a VPN in front of it, which is why the two are paired here.
+
+Detail worth mentioning on camera: Mullvad Browser is co-developed with the Tor Project, and
+ships the **same version numbers as Tor Browser** (both 15.0.21 as of writing) because it is
+built from the same codebase. It is Tor Browser's fingerprint hardening with the Tor network
+removed and a VPN assumed in its place.
 
 ## 1. Download
 
@@ -19,8 +26,9 @@ Or from the official GitHub releases: <https://github.com/mullvad/mullvad-browse
 
 Verify the signature first — see [verify-downloads.md](verify-downloads.md).
 
-There is **no Android or iOS version.** On mobile, use Tor Browser for Android, or Firefox
-with strict tracking protection plus the Mullvad VPN app.
+There is **no Android or iOS version.** On mobile, run the Mullvad VPN app (Layer 1 works
+fine there) with Firefox and strict tracking protection. Mobile fingerprint resistance is
+weaker than desktop across the board — see [going-further.md](going-further.md).
 
 ## 2. Install
 

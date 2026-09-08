@@ -2,12 +2,12 @@
 
 *Fingerprints verified against the official documentation, September 2026.*
 
-Skipping this step is the most common way a "privacy setup" turns into a compromised
-machine. A backdoored Tor Browser build is a documented, real-world attack — attackers have
-distributed modified copies through fake mirrors and search ads. Signature verification is
+Skipping this step is the most common way a "privacy setup" turns into a compromised machine.
+Attackers distribute modified builds of privacy software through fake mirrors and search ads,
+and the modified copy looks and works exactly like the real one. Signature verification is
 how you know the file came from the people who wrote it.
 
-It takes about three minutes. Do it.
+It takes about three minutes per file. Do it for both layers.
 
 ---
 
@@ -19,10 +19,45 @@ It takes about three minutes. Do it.
 
 ---
 
-## Verifying Tor Browser
+## Layer 1 — verifying the Mullvad VPN app
 
-Note: **Mullvad Browser is signed with the same key**, because it is built by the Tor
-Project. One key covers both browsers.
+**Key fingerprint** — Mullvad's own code signing key:
+
+```
+A119 8702 FC3E 0A09 A9AE 5B75 D5A1 D4F2 66DE 8DDF
+```
+
+1. Download the app **and** its `.asc` signature from
+   <https://mullvad.net/en/download/vpn/> — each platform page has a signature link next to
+   the installer. Put both files in the same folder.
+
+2. Import the key:
+
+```bash
+gpg --keyserver hkps://keys.openpgp.org --recv-keys A1198702FC3E0A09A9AE5B75D5A1D4F266DE8DDF
+```
+
+3. Check the fingerprint you imported matches the one above, character by character:
+
+```bash
+gpg --fingerprint admin@mullvad.net
+```
+
+4. Verify:
+
+```bash
+gpg --verify MullvadVPN-2026.4.exe.asc
+```
+
+Substitute your actual filename. You want `Good signature from "Mullvad (code signing)"`.
+
+---
+
+## Layer 2 — verifying Mullvad Browser
+
+**Different key.** Mullvad Browser is signed by the **Tor Browser Developers** key, because
+the Tor Project co-develops and builds it. This surprises people, and it is correct — if you
+see this key, you have the right file.
 
 **Key fingerprint:**
 
@@ -36,10 +71,9 @@ Subkey (the one that actually signs releases):
 CAAE 408A EBE2 288E 96FC 5D5E 1574 32CF 78A6 5729
 ```
 
-### Steps
-
-1. Download the installer **and** the matching `.asc` signature file from the same page.
-   Put both in the same folder.
+1. Download the installer **and** its `.asc` signature from
+   <https://mullvad.net/en/download/browser/> or from the
+   [GitHub release](https://github.com/mullvad/mullvad-browser/releases). Same folder.
 
 2. Fetch the signing key:
 
@@ -47,29 +81,14 @@ CAAE 408A EBE2 288E 96FC 5D5E 1574 32CF 78A6 5729
 gpg --auto-key-locate nodefault,wkd --locate-keys torbrowser@torproject.org
 ```
 
-3. Check the fingerprint you just imported matches the one printed above — read it
-   character by character:
+3. Check the fingerprint against the values above. Passing `--fingerprint` twice also shows
+   the subkey:
 
 ```bash
 gpg --fingerprint --fingerprint torbrowser@torproject.org
 ```
 
-Passing `--fingerprint` twice also shows the subkey fingerprint.
-
-4. Verify the file:
-
-```bash
-gpg --verify tor-browser-windows-x86_64-portable-15.0.21.exe.asc
-```
-
-Substitute your actual filename.
-
----
-
-## Verifying Mullvad Browser
-
-Identical process, same key. The signature link is on the download page, or on the GitHub
-release next to the installer.
+4. Verify:
 
 ```bash
 gpg --verify mullvad-browser-windows-x86_64-15.0.21.exe.asc
@@ -77,36 +96,13 @@ gpg --verify mullvad-browser-windows-x86_64-15.0.21.exe.asc
 
 ---
 
-## Verifying the Mullvad VPN app
-
-Different key — this one is Mullvad's own.
-
-**Key fingerprint:**
-
-```
-A119 8702 FC3E 0A09 A9AE 5B75 D5A1 D4F2 66DE 8DDF
-```
-
-1. Download the app and its `.asc` signature from
-   <https://mullvad.net/en/download/vpn/> (each platform page has a signature link).
-
-2. Import the key:
-
-```bash
-gpg --keyserver hkps://keys.openpgp.org --recv-keys A1198702FC3E0A09A9AE5B75D5A1D4F266DE8DDF
-```
-
-3. Verify:
-
-```bash
-gpg --verify MullvadVPN-2026.4.exe.asc
-```
-
----
-
 ## Reading the output
 
 **Good:**
+
+```
+gpg: Good signature from "Mullvad (code signing) <admin@mullvad.net>"
+```
 
 ```
 gpg: Good signature from "Tor Browser Developers (signing key) <torbrowser@torproject.org>"
@@ -129,22 +125,22 @@ official documentation.
 gpg: BAD signature from ...
 ```
 
-Delete the file. Do not run it. Re-download from the official site, and consider that
-something on your network or machine may be interfering.
+Delete the file. Do not run it. Re-download from the official site, and treat it as a sign
+that something on your network or machine may be interfering.
 
 ---
 
 ## The fingerprint problem
 
-There is a bootstrapping issue worth naming honestly, especially in a video: you are reading
+Worth naming honestly, especially if you are explaining this to other people: you are reading
 the fingerprint from the same website you downloaded the file from. If an attacker fully
 controls that site, they control both.
 
-In practice this is still a large improvement, because it forces the attacker to compromise
-the website's TLS *and* the distribution *and* keep the two consistent — rather than just
-seeding a fake mirror or buying a search ad.
+In practice this is still a large improvement, because it forces an attacker to compromise
+the website's TLS *and* the distribution *and* keep the two consistent — rather than simply
+seeding a fake mirror or buying a search ad, which is what actually happens in the wild.
 
-To do better, cross-check the fingerprint against an independent source: the Tor Project's
-GitLab, the Mullvad GitHub repository, an archived copy of the page from a different date,
-or a copy someone else published years ago. If several independent sources agree, the key is
-almost certainly real.
+To do better, cross-check each fingerprint against an independent source: the
+[Mullvad GitHub org](https://github.com/mullvad), the Tor Project's GitLab, an archived copy
+of the page from a different date, or a copy someone published years ago. If several
+independent sources agree, the key is almost certainly real.

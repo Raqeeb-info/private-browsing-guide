@@ -1,21 +1,52 @@
-# Private Browsing Setup Guide
+# Mullvad VPN + Mullvad Browser
 
-A practical guide to browsing the internet privately: choosing between **Tor Browser** and
-**Mullvad Browser**, setting up **Mullvad VPN**, and avoiding the mistakes that undo all of it.
+A complete private browsing setup using two tools that solve two different problems:
 
-> **Scope:** this is about *privacy from surveillance, tracking and profiling* — advertisers,
-> data brokers, your ISP, and casual network observers. It is not a guide to evading law
-> enforcement, and no tool listed here will do that for you.
+| Layer | Tool | Hides |
+|---|---|---|
+| **1. Network** | **Mullvad VPN** | Your **IP address** — from websites, and your browsing from your ISP |
+| **2. Browser** | **Mullvad Browser** | Your **fingerprint** — the signals that identify you even without an IP |
+
+Neither one is enough alone. Together they cover both halves of how you get tracked online.
+
+> **Scope:** this is about privacy from tracking, profiling and surveillance — advertisers,
+> data brokers, your ISP, and casual network observers. No tool here makes you anonymous
+> from a determined, well-resourced adversary, and none of it is a shield for illegal activity.
 
 ---
 
-## The one-paragraph answer
+## Why two tools
 
-**Use Mullvad Browser + Mullvad VPN for everyday private browsing.** It is fast enough to
-actually live in, it kills browser fingerprinting, and the VPN hides your IP from the sites
-you visit. **Use Tor Browser when you need real anonymity** — when it matters that *nobody*,
-including your VPN provider, can link the traffic back to you. They solve different problems.
-Pick based on your threat model, not on which one sounds more hardcore.
+Most privacy advice stops at "get a VPN." That solves exactly one of the two ways you are
+identified online.
+
+### Problem 1: the network knows who you are
+
+Your ISP sees every domain you visit and is allowed to sell that in many countries. Every
+site you load sees your IP address, which maps to your city and your account with your ISP.
+
+**Mullvad VPN fixes this.** Your traffic goes to Mullvad first, encrypted. Your ISP sees only
+that you talked to Mullvad. Websites see a Mullvad IP shared with many other users.
+
+### Problem 2: the browser tells on you anyway
+
+Here is the part the VPN does nothing about. Every site you visit can read: your screen
+resolution, your timezone, your fonts, your GPU model, your language, your installed
+extensions, how your browser renders a hidden image. Combined, that is usually **unique** —
+a fingerprint that follows you across IP addresses, across incognito windows, across cleared
+cookies.
+
+A VPN with a normal browser is like wearing a mask while keeping your name tag on.
+
+**Mullvad Browser fixes this.** It makes you look identical to every other Mullvad Browser
+user: spoofed timezone, standardized screen metrics, blocked canvas and WebGL fingerprinting,
+no telemetry, nothing written to disk.
+
+### Together
+
+- **VPN alone** — sites can't see your IP, but they still recognize *you* by fingerprint
+- **Browser alone** — sites can't fingerprint you, but they see your real IP and ISP
+- **Both** — no IP, no fingerprint, no ISP visibility
 
 ---
 
@@ -23,66 +54,71 @@ Pick based on your threat model, not on which one sounds more hardcore.
 
 | Doc | What's in it |
 |---|---|
-| [docs/threat-model.md](docs/threat-model.md) | Decide what you're actually defending against — read this first |
-| [docs/browser-comparison.md](docs/browser-comparison.md) | Tor Browser vs Mullvad Browser, in detail |
-| [docs/setup-mullvad-vpn.md](docs/setup-mullvad-vpn.md) | Installing and configuring Mullvad VPN |
-| [docs/setup-mullvad-browser.md](docs/setup-mullvad-browser.md) | Installing and configuring Mullvad Browser |
-| [docs/setup-tor-browser.md](docs/setup-tor-browser.md) | Installing and configuring Tor Browser |
-| [docs/verify-downloads.md](docs/verify-downloads.md) | Verifying signatures so you don't install a backdoored build |
-| [docs/common-mistakes.md](docs/common-mistakes.md) | The things that leak your identity anyway |
-| [docs/going-further.md](docs/going-further.md) | Tails, Whonix, Qubes, DNS, search, email |
+| [docs/how-it-works.md](docs/how-it-works.md) | The two layers explained properly — read this first |
+| [docs/threat-model.md](docs/threat-model.md) | What this setup does and does not defend against |
+| [docs/1-mullvad-vpn.md](docs/1-mullvad-vpn.md) | **Layer 1** — installing and configuring the VPN |
+| [docs/2-mullvad-browser.md](docs/2-mullvad-browser.md) | **Layer 2** — installing and configuring the browser |
+| [docs/verify-downloads.md](docs/verify-downloads.md) | Checking signatures so you don't install a backdoored build |
+| [docs/common-mistakes.md](docs/common-mistakes.md) | The things that undo all of it |
+| [docs/going-further.md](docs/going-further.md) | DNS, search, email, and where this setup stops |
 | [LINKS.md](LINKS.md) | Every official link in one place |
-| [VIDEO-OUTLINE.md](VIDEO-OUTLINE.md) | A structure for the video, with the framing that keeps it accurate |
+| [VIDEO-OUTLINE.md](VIDEO-OUTLINE.md) | A video structure built on the two-layer framing |
 
 ---
 
 ## Quick start
 
-1. Read [docs/threat-model.md](docs/threat-model.md) — 5 minutes, saves you from over- or under-building.
-2. Sign up for Mullvad VPN at <https://mullvad.net/> — no email, no name. Save the account number.
-3. Install the VPN: [docs/setup-mullvad-vpn.md](docs/setup-mullvad-vpn.md)
-4. Install a browser:
-   - Everyday privacy → [Mullvad Browser](docs/setup-mullvad-browser.md)
-   - Real anonymity → [Tor Browser](docs/setup-tor-browser.md)
-5. Verify what you downloaded: [docs/verify-downloads.md](docs/verify-downloads.md)
-6. Read [docs/common-mistakes.md](docs/common-mistakes.md) before you start using it.
+1. Read [docs/how-it-works.md](docs/how-it-works.md) — five minutes, makes the rest obvious
+2. Create a Mullvad account at <https://mullvad.net/en/account/create> — no email, no name,
+   just a generated number. **Write the number down.**
+3. Install and configure the VPN: [docs/1-mullvad-vpn.md](docs/1-mullvad-vpn.md)
+4. Install and configure the browser: [docs/2-mullvad-browser.md](docs/2-mullvad-browser.md)
+5. Verify both signatures: [docs/verify-downloads.md](docs/verify-downloads.md)
+6. Test it works:
+   - IP → <https://mullvad.net/check>
+   - Fingerprint → <https://coveryourtracks.eff.org/>
+7. Read [docs/common-mistakes.md](docs/common-mistakes.md) before you rely on any of it
 
 ---
 
-## The two problems, kept separate
+## Why Mullvad for both
 
-Privacy online is really two independent problems. Most people conflate them, and that's
-where bad setups come from.
-
-**Problem 1 — the network sees who you are.** Your ISP sees every domain you visit. Every
-site you load sees your IP address, which maps to your rough location and your account with
-your ISP. *Fixed by:* a VPN (shifts trust to the VPN provider) or Tor (removes the need to
-trust anyone single party).
-
-**Problem 2 — the browser tells sites who you are.** Even with a perfect IP hiding, your
-browser leaks a fingerprint: screen size, fonts, GPU, timezone, language, extensions.
-Combined, that's often unique enough to track you across sites and across IP changes.
-*Fixed by:* a fingerprint-resistant browser (Mullvad Browser or Tor Browser).
-
-**You need both.** A VPN with Chrome is barely private. Tor Browser on your normal machine
-still needs care. This guide covers both halves.
+- **No account, no email, no name.** You get a 16-digit number. There is no personal data to
+  leak, subpoena, or breach.
+- **Flat €5/month**, whether you buy one month or ten years. No countdown timers, no
+  "83% off" pricing games.
+- **Cash accepted.** Literally mail an envelope. Also Monero and Bitcoin, plus normal cards.
+- **Repeatedly audited** by third parties, publicly, with the reports published.
+- **RAM-only servers** — no disks to seize or forensically recover.
+- **Open source clients**, all on GitHub.
+- **No affiliate program and no influencer sponsorships**, by policy. Nobody is paid to
+  recommend Mullvad, which is part of why it keeps showing up in honest recommendations.
+- **The browser is co-developed with the Tor Project** — it is built on the same
+  fingerprint-resistance engineering as Tor Browser, minus the Tor network.
 
 ---
 
-## What none of this protects you from
+## Be accurate about what this does
 
-Be honest about this in your own head, and on camera if you're making a video:
+Worth saying plainly, especially if you're explaining it to other people:
 
-- **Logging into accounts.** The moment you sign into Google, Facebook, or anything tied to
-  your real name, that session is deanonymized. No browser fixes it.
-- **What you type.** Writing style, usernames you reuse, personal details you mention.
-- **Malware on your machine.** If your OS is compromised, the browser doesn't matter.
-- **Global adversaries.** A well-resourced actor watching both ends of a Tor circuit can, in
-  theory, correlate timing. This is a real, studied limitation.
-- **Doing illegal things.** These are privacy tools, not immunity.
+**Mullvad still receives your traffic.** They have to, in order to route it. What you have
+done is swap trusting your ISP — a company that sells browsing data as a line of business —
+for trusting one whose entire model depends on not knowing who you are, backed by audits and
+diskless infrastructure. That is a real, significant upgrade. It is not the same as being
+anonymous.
+
+Accurate claim: *"My ISP can't see my browsing, websites can't see my IP, and nothing can
+fingerprint me across sites."*
+
+Not accurate: *"I'm anonymous."*
+
+If you need the version where **no single party** can link you to your traffic, that is Tor's
+three-relay design, and it is a different tool with different costs — see
+[docs/going-further.md](docs/going-further.md).
 
 ---
 
 ## License
 
-Documentation released under [CC BY 4.0](LICENSE). Do what you like with it, credit appreciated.
+Documentation released under [CC BY 4.0](LICENSE).

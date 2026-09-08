@@ -1,146 +1,161 @@
-# The mistakes that undo everything
+# The mistakes that undo both layers
 
-You can have a perfect VPN and a perfectly hardened browser and still be identified in about
-four seconds. These are the ways it happens, roughly in order of how often they do.
+You can have Layer 1 and Layer 2 set up perfectly and still be identified in about four
+seconds. These are the ways it happens, roughly in order of how often they do.
 
 ---
 
 ## 1. Logging into an account tied to your real name
 
-**The mistake:** opening Gmail, Facebook, Instagram, Amazon, or anything else with your real
-identity inside your private browser.
+**Breaks:** both layers, instantly.
 
-**Why it kills you:** the site now has a session cookie linked to *you*. Your IP and
+**The mistake:** opening Gmail, Facebook, Instagram, Amazon, or anything with your real
+identity inside Mullvad Browser.
+
+**Why it kills you:** the site now has a session cookie linked to *you*. Your IP and your
 fingerprint are irrelevant — you told them who you are. Worse, that session can be correlated
 with every other page you visit while logged in, and with the ad and analytics networks
 embedded in those pages.
 
-**Fix:** hard separation. One browser for anonymous browsing, a different browser for your
-logged-in life. Never cross the streams. If you slip, close the browser, clear everything,
-and treat that session as burned.
+**Fix:** hard separation. Mullvad Browser for private browsing, a completely different
+browser for your logged-in life. Never cross the streams. If you slip, close the browser,
+clear everything, and treat that session as burned.
 
 ---
 
-## 2. Free VPNs
+## 2. Using a free VPN instead of Layer 1
 
-**The mistake:** using a free VPN, or a heavily discounted one from a YouTube sponsor read.
+**Breaks:** Layer 1, and worse than having no VPN at all.
 
 **Why it kills you:** running VPN infrastructure costs real money. If you are not paying,
-your data is the revenue. Multiple free VPNs have been caught logging, injecting ads,
-selling bandwidth, or shipping outright malware. Several are quietly owned by companies whose
-main business is advertising analytics.
+your data is the revenue. Multiple free VPNs have been caught logging, injecting ads, selling
+users' bandwidth, or shipping outright malware. Several are quietly owned by companies whose
+main business is advertising analytics — so you routed *all* your traffic through an ad
+company on purpose.
 
-**Fix:** pay for a provider with a published, audited no-logs policy. Mullvad, IVPN, and
-Proton VPN are the usual reputable picks. €5/month is the real price.
+**Fix:** €5/month is the real price. Pay it.
 
 ---
 
-## 3. Installing extensions in a hardened browser
+## 3. Installing extensions in Mullvad Browser
 
-**The mistake:** adding your favourite password manager, dark mode extension, or a second
-ad blocker to Mullvad Browser or Tor Browser.
+**Breaks:** Layer 2, comprehensively.
 
 **Why it kills you:** fingerprint resistance works by making everyone look identical. Every
 extension you add makes you *different*. Extensions are detectable from a web page — through
 injected DOM elements, resources they expose, or timing. Two or three unusual extensions is
-often enough to be globally unique.
+often enough to be globally unique, which means you have defeated the entire point of the
+browser.
 
-**Fix:** use what ships with the browser. uBlock Origin is already there. If you need a
-password manager, keep it in your other browser.
+**Fix:** use what ships with it. uBlock Origin is already installed, and everyone else has
+it too, which is exactly why it is safe. If you need a password manager, keep it in your
+other browser.
 
 ---
 
 ## 4. Maximizing the window
 
-**The mistake:** hitting the maximize button out of habit.
+**Breaks:** Layer 2.
 
 **Why it kills you:** your window's inner dimensions are readable by JavaScript. Maximized
 means your exact screen resolution, minus your exact taskbar height and browser chrome. That
-is a strong identifier, and it persists across IP changes.
+is a strong identifier and it persists across IP changes, so it defeats Layer 1 too.
 
 **Fix:** leave the default window size. Letterboxing mitigates it by rounding dimensions to
-common values, but the default is still the safest.
+common values, but the default size is still the safest.
 
 ---
 
-## 5. Trusting the VPN too much
+## 5. Running one layer and thinking you are done
+
+**Breaks:** whichever half you skipped.
+
+**The mistake:** "I have a VPN, I'm private." Or: "I use a hardened browser, I'm fine."
+
+**Why it kills you:** a VPN with a normal browser leaves you fully fingerprintable — sites
+recognize you across every IP you ever use. A hardened browser with no VPN leaves your real
+IP and your ISP's full view of your browsing intact.
+
+**Fix:** both. That is the whole premise of this repo.
+
+---
+
+## 6. Trusting Layer 1 too much
+
+**Breaks:** your understanding, which eventually breaks your behavior.
 
 **The mistake:** thinking "no logs" means "nobody can ever know."
 
 **Why it matters:** Mullvad receives your packets. They must, in order to route them. Their
 protection is a policy backed by audits, RAM-only servers, and a business model that does not
-need your identity. That is genuinely strong. It is not the same as *cryptographic*
-impossibility, which is what Tor gives you.
+need your identity — and it has survived a real police search. That is genuinely strong. It
+is not the same as *cryptographic* impossibility.
 
-**Fix:** be accurate about what you have. Say "my ISP cannot see my browsing and websites
-cannot see my IP" — not "I am anonymous."
+**Fix:** be accurate about what you have. "My ISP can't see my browsing and websites can't
+see my IP" — not "I'm anonymous."
 
 ---
 
-## 6. DNS leaks
+## 7. DNS leaks
 
-**The mistake:** setting a custom DNS server, or using a VPN client that does not route DNS.
+**Breaks:** Layer 1, silently.
+
+**The mistake:** setting a custom DNS server, or using a VPN client that does not route DNS
+through the tunnel.
 
 **Why it kills you:** DNS queries reveal every domain you visit. If they go outside the
-tunnel, your ISP has your full browsing history regardless of the VPN.
+tunnel, your ISP has your full browsing history regardless of the VPN, and you will never
+notice.
 
-**Fix:** leave Mullvad's DNS settings alone, and test at <https://browserleaks.com/dns>. Do not
-"improve" it by pointing at Google DNS — that hands your history to an ad company.
-
----
-
-## 7. Opening downloaded files while connected
-
-**The mistake:** downloading a PDF or DOCX in Tor Browser and double-clicking it.
-
-**Why it kills you:** these formats can fetch remote resources. Your PDF reader or Word is
-not routed through Tor, so it connects directly — revealing your real IP to whoever made the
-document. This is a known, actively used technique.
-
-**Fix:** disconnect from the internet before opening, or open in a VM, or use Tails which
-handles this for you.
+**Fix:** leave Mullvad's DNS settings alone and test at <https://browserleaks.com/dns>. Do
+not "improve" it by pointing at Google DNS — that hands your history to an ad company.
 
 ---
 
-## 8. Torrenting over Tor or a leaky VPN
+## 8. Opening downloaded files while connected
 
-**The mistake:** running BitTorrent through Tor.
+**Breaks:** both layers, from outside the browser.
 
-**Why it kills you:** BitTorrent clients frequently send your real IP inside the protocol
-itself, regardless of proxy settings. It also consumes enormous amounts of volunteer-donated
-Tor bandwidth, degrading the network for people who need it.
+**The mistake:** downloading a PDF or DOCX and double-clicking it.
 
-**Fix:** do not torrent over Tor. If you torrent, use a VPN that supports it, with a kill
-switch, and bind the client to the VPN interface.
+**Why it kills you:** these formats can fetch remote resources. Your PDF reader or Word is a
+separate application — it is covered by the VPN, but it is not covered by the browser's
+protections, and if the VPN ever drops it connects directly. Documents that phone home are an
+actively used tracking technique.
+
+**Fix:** make sure the kill switch is on. For anything sensitive, disconnect from the
+internet before opening, or open it in a VM.
 
 ---
 
-## 9. Your writing and your habits
+## 9. Turning off protections to fix a broken site
 
-**The mistake:** assuming technical anonymity is the whole problem.
+**Breaks:** Layer 2.
+
+**The mistake:** a site misbehaves, so you drop the security level, allow scripts, or change
+a privacy setting — and then leave it that way.
+
+**Why it kills you:** every setting you change moves you further from the default
+configuration everyone else has. Your customized browser is a fingerprint.
+
+**Fix:** open that one site in your other browser instead. Never customize the private one.
+
+---
+
+## 10. Your writing and your habits
+
+**Breaks:** everything, without touching the technology.
 
 **Why it kills you:** stylometry is real and effective. So is reusing a username, mentioning
-your city, posting at consistent local hours, referencing a job, or uploading a photo with
-EXIF data. Technical identifiers get all the attention; behavioral ones do most of the work.
+your city, posting at consistent local hours, referencing your job, or uploading a photo with
+EXIF data intact.
 
-**Fix:** if it genuinely matters, do not reuse usernames, strip metadata from files, watch
-what you disclose, and be aware that your writing style is itself an identifier.
-
----
-
-## 10. Believing a single tool is enough
-
-**The mistake:** "I have a VPN, I am private."
-
-**Why it kills you:** a VPN changes one variable. Your browser fingerprint, your cookies,
-your logins, your DNS, your behavior, and your OS all still identify you. Privacy is a stack,
-and it fails at the weakest layer.
-
-**Fix:** VPN plus hardened browser plus discipline about accounts. All three, or none of them
-matter much.
+**Fix:** if it genuinely matters, do not reuse usernames, strip metadata from files, and be
+aware that your writing style is itself an identifier.
 
 ---
 
 ## The one-sentence version
 
-**Technical tools protect you from the network. Nothing protects you from yourself.**
+**Layer 1 protects you from the network. Layer 2 protects you from the browser. Nothing
+protects you from yourself.**

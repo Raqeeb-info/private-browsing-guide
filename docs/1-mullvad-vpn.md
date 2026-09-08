@@ -1,6 +1,12 @@
-# Setting up Mullvad VPN
+# Layer 1 — Mullvad VPN (IP protection)
 
 *Verified against Mullvad app version 2026.4, September 2026.*
+
+**What this layer does:** hides your IP address from every website you visit, and hides your
+browsing from your ISP.
+
+**What it does not do:** stop browser fingerprinting. That is
+[Layer 2](2-mullvad-browser.md), and you need both.
 
 ## Why Mullvad specifically
 
@@ -95,8 +101,9 @@ If any of these fail, fix it before you rely on the setup.
 Mullvad hides your IP from websites and hides your browsing from your ISP. It does **not**:
 
 - Make you anonymous (Mullvad receives your traffic; you're trusting their no-logs policy)
-- Stop browser fingerprinting (that's the browser's job — see the browser setup docs)
+- Stop browser fingerprinting — that is entirely [Layer 2's](2-mullvad-browser.md) job, and
+  without it you are still recognizable on every site you visit
 - Protect you if you log into accounts tied to your real identity
 - Stop malware, phishing, or anything on your own machine
 
-It's one layer. A good one. Not the whole stack.
+It is one layer. A good one. Now go install [Layer 2](2-mullvad-browser.md).
