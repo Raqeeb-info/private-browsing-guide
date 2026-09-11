@@ -1,0 +1,729 @@
+<title>Fingerprint Lineup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#EDEFF3; --surface:#FFFFFF; --surface-2:#E4E8EE; --surface-3:#DCE1E9;
+  --ink:#11151E; --ink-2:#4B5464; --ink-3:#7C8695;
+  --line:#CDD4DE; --line-strong:#AEB7C4;
+  --accent:#9A6200; --accent-bg:#F7E9CC; --accent-line:#DCBB77;
+  --alert:#B03428; --alert-bg:#FADFDB; --alert-line:#E5A79F;
+  --ok:#16694A; --ok-bg:#D3EDE1; --ok-line:#8CCBAF;
+  --shadow:0 1px 2px rgba(17,21,30,.06), 0 8px 24px -12px rgba(17,21,30,.18);
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --sans:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0C0F16; --surface:#151A24; --surface-2:#1D2430; --surface-3:#252D3B;
+    --ink:#E9EDF4; --ink-2:#9CA6B6; --ink-3:#6C7686;
+    --line:#28303D; --line-strong:#3A4453;
+    --accent:#F0B429; --accent-bg:#2E2513; --accent-line:#5C4A1E;
+    --alert:#FF7A6E; --alert-bg:#331A18; --alert-line:#6B3029;
+    --ok:#4ECB94; --ok-bg:#0F2E22; --ok-line:#1F5741;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0C0F16; --surface:#151A24; --surface-2:#1D2430; --surface-3:#252D3B;
+  --ink:#E9EDF4; --ink-2:#9CA6B6; --ink-3:#6C7686;
+  --line:#28303D; --line-strong:#3A4453;
+  --accent:#F0B429; --accent-bg:#2E2513; --accent-line:#5C4A1E;
+  --alert:#FF7A6E; --alert-bg:#331A18; --alert-line:#6B3029;
+  --ok:#4ECB94; --ok-bg:#0F2E22; --ok-line:#1F5741;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:var(--sans); font-size:16px; line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1120px; margin:0 auto; padding:28px 22px 80px;
+  display:flex; flex-direction:column; gap:26px}
+
+/* ---------- masthead ---------- */
+.masthead{display:flex; align-items:flex-start; justify-content:space-between; gap:20px; flex-wrap:wrap}
+.brand{display:flex; flex-direction:column; gap:5px}
+.eyebrow{font-family:var(--mono); font-size:11px; font-weight:500;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--ink-3)}
+h1{margin:0; font-size:29px; font-weight:700; letter-spacing:-.02em; line-height:1.1; text-wrap:balance}
+.tagline{color:var(--ink-2); font-size:14.5px; max-width:60ch; margin:0}
+.theme-btn{
+  font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+  background:var(--surface); color:var(--ink-2); border:1px solid var(--line);
+  border-radius:7px; padding:8px 12px; cursor:pointer; white-space:nowrap;
+}
+.theme-btn:hover{border-color:var(--line-strong); color:var(--ink)}
+
+/* ---------- reading panel ---------- */
+.reading{
+  background:var(--surface); border:1px solid var(--line); border-radius:14px;
+  box-shadow:var(--shadow); overflow:hidden;
+}
+.reading-top{
+  display:grid; grid-template-columns:1fr auto; gap:24px; align-items:center;
+  padding:26px 28px; border-bottom:1px solid var(--line);
+}
+@media (max-width:720px){ .reading-top{grid-template-columns:1fr} }
+.field-label{
+  font-family:var(--mono); font-size:11px; font-weight:500; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--ink-3); margin-bottom:10px;
+}
+.hash{
+  font-family:var(--mono); font-weight:600; letter-spacing:.02em;
+  font-size:clamp(30px,6.2vw,54px); line-height:1; color:var(--ink);
+  word-break:break-all; font-variant-numeric:tabular-nums;
+}
+.hash .sep{color:var(--accent); padding:0 .12em}
+.hash.pending{color:var(--ink-3)}
+.readout{display:flex; flex-direction:column; gap:14px; min-width:150px}
+.metric{display:flex; flex-direction:column; gap:3px}
+.metric-n{font-family:var(--mono); font-size:23px; font-weight:600; line-height:1;
+  font-variant-numeric:tabular-nums}
+.metric-l{font-size:12px; color:var(--ink-3)}
+
+/* ---------- capture bar ---------- */
+.capture{display:flex; gap:12px; align-items:flex-end; flex-wrap:wrap; padding:20px 28px;
+  background:var(--surface-2)}
+.ctl{display:flex; flex-direction:column; gap:6px}
+.ctl > span{font-family:var(--mono); font-size:10.5px; letter-spacing:.13em;
+  text-transform:uppercase; color:var(--ink-3)}
+input[type=text], select{
+  font-family:var(--sans); font-size:14.5px; color:var(--ink);
+  background:var(--surface); border:1px solid var(--line); border-radius:8px;
+  padding:9px 11px; min-width:190px;
+}
+input[type=text]{font-family:var(--mono); font-size:14px}
+input:focus-visible, select:focus-visible, button:focus-visible{
+  outline:2px solid var(--accent); outline-offset:2px}
+.btn{
+  font-family:var(--sans); font-size:14.5px; font-weight:600; color:var(--bg);
+  background:var(--ink); border:1px solid var(--ink); border-radius:8px;
+  padding:10px 18px; cursor:pointer;
+}
+.btn:hover{opacity:.86}
+.btn-ghost{background:transparent; color:var(--ink-2); border-color:var(--line)}
+.btn-ghost:hover{color:var(--ink); border-color:var(--line-strong); opacity:1}
+.btn-sm{font-size:12.5px; padding:7px 12px}
+.spacer{flex:1 1 40px}
+
+/* ---------- verdict ---------- */
+.verdict{
+  border-radius:14px; border:1px solid var(--line); background:var(--surface);
+  padding:22px 26px; display:flex; gap:20px; align-items:flex-start;
+}
+.verdict.is-alert{background:var(--alert-bg); border-color:var(--alert-line)}
+.verdict.is-ok{background:var(--ok-bg); border-color:var(--ok-line)}
+.verdict-mark{
+  font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.14em;
+  text-transform:uppercase; padding:6px 10px; border-radius:6px; white-space:nowrap;
+  background:var(--surface); border:1px solid var(--line); color:var(--ink-2);
+}
+.verdict.is-alert .verdict-mark{background:var(--alert); border-color:var(--alert); color:#fff}
+.verdict.is-ok .verdict-mark{background:var(--ok); border-color:var(--ok); color:#fff}
+.verdict-body{display:flex; flex-direction:column; gap:6px}
+.verdict-title{font-size:21px; font-weight:700; letter-spacing:-.015em; line-height:1.2;
+  text-wrap:balance; margin:0}
+.verdict.is-alert .verdict-title{color:var(--alert)}
+.verdict.is-ok .verdict-title{color:var(--ok)}
+.verdict-note{margin:0; font-size:14.5px; color:var(--ink-2); max-width:68ch}
+
+/* ---------- lineup ---------- */
+.section-head{display:flex; align-items:baseline; justify-content:space-between;
+  gap:16px; flex-wrap:wrap}
+h2{margin:0; font-size:17px; font-weight:600; letter-spacing:-.01em}
+.hint{font-size:13px; color:var(--ink-3); margin:0}
+.lineup{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px}
+.card{
+  background:var(--surface); border:1px solid var(--line); border-radius:12px;
+  padding:18px; display:flex; flex-direction:column; gap:13px; position:relative;
+}
+.card-head{display:flex; align-items:flex-start; justify-content:space-between; gap:10px}
+.card-seq{font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.1em;
+  color:var(--ink-3)}
+.card-name{font-size:15.5px; font-weight:600; line-height:1.25; margin:0}
+.card-hash{font-family:var(--mono); font-size:19px; font-weight:600; line-height:1.2;
+  word-break:break-all; letter-spacing:.01em}
+.card-hash .sep{color:var(--accent)}
+.card-rows{display:flex; flex-direction:column; gap:5px; font-size:12.5px}
+.card-row{display:flex; justify-content:space-between; gap:10px; color:var(--ink-2)}
+.card-row b{font-family:var(--mono); font-weight:500; color:var(--ink); text-align:right;
+  word-break:break-all}
+.tag{
+  align-self:flex-start; font-family:var(--mono); font-size:10.5px; font-weight:600;
+  letter-spacing:.1em; text-transform:uppercase; padding:4px 8px; border-radius:5px;
+}
+.tag-same{background:var(--alert-bg); color:var(--alert); border:1px solid var(--alert-line)}
+.tag-uniq{background:var(--ok-bg); color:var(--ok); border:1px solid var(--ok-line)}
+.x{background:none; border:none; color:var(--ink-3); cursor:pointer; font-size:17px;
+  line-height:1; padding:2px 4px; border-radius:4px; font-family:var(--mono)}
+.x:hover{color:var(--alert); background:var(--alert-bg)}
+
+.ghosts{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px}
+.ghost{
+  border:1px dashed var(--line-strong); border-radius:12px; padding:18px;
+  display:flex; flex-direction:column; gap:7px; background:transparent;
+}
+.ghost-seq{font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.1em;
+  color:var(--ink-3)}
+.ghost-name{font-size:15px; font-weight:600; color:var(--ink-2)}
+.ghost-note{font-size:12.5px; color:var(--ink-3); margin:0}
+
+/* ---------- signals ---------- */
+.signals{background:var(--surface); border:1px solid var(--line); border-radius:14px;
+  overflow:hidden}
+.sig-head{padding:18px 22px; border-bottom:1px solid var(--line); display:flex;
+  align-items:baseline; justify-content:space-between; gap:14px; flex-wrap:wrap}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse; width:100%; font-size:13.5px}
+th{
+  font-family:var(--mono); font-size:10.5px; font-weight:600; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--ink-3); text-align:left;
+  padding:10px 22px; background:var(--surface-2); white-space:nowrap;
+  border-bottom:1px solid var(--line);
+}
+td{padding:9px 22px; border-bottom:1px solid var(--line); vertical-align:top}
+tbody tr:last-child td{border-bottom:none}
+.sig-group td{
+  background:var(--surface-2); font-family:var(--mono); font-size:10.5px; font-weight:600;
+  letter-spacing:.12em; text-transform:uppercase; color:var(--ink-3); padding:8px 22px;
+}
+.sig-name{color:var(--ink-2); white-space:nowrap}
+.sig-val{font-family:var(--mono); font-size:12.5px; color:var(--ink);
+  max-width:520px; overflow-wrap:anywhere}
+.sig-state{white-space:nowrap; width:1%}
+.chip{font-family:var(--mono); font-size:10px; font-weight:600; letter-spacing:.08em;
+  text-transform:uppercase; padding:3px 7px; border-radius:4px; display:inline-block}
+.chip-stable{background:var(--alert-bg); color:var(--alert)}
+.chip-varies{background:var(--ok-bg); color:var(--ok)}
+.chip-idle{background:var(--surface-3); color:var(--ink-3)}
+
+/* ---------- transfer ---------- */
+.transfer{display:flex; gap:12px; align-items:flex-end; flex-wrap:wrap;
+  padding:18px 22px; background:var(--surface-2); border-top:1px solid var(--line)}
+.transfer input{flex:1 1 260px; min-width:0}
+.toast{font-size:13px; color:var(--ok); font-weight:600; align-self:center}
+
+footer{color:var(--ink-3); font-size:12.5px; line-height:1.65; max-width:74ch}
+footer a{color:var(--accent)}
+code{font-family:var(--mono); font-size:.92em; background:var(--surface-2);
+  padding:1px 5px; border-radius:4px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important; animation:none!important}}
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="brand">
+      <div class="eyebrow">Browser identification · demo instrument</div>
+      <h1>Fingerprint Lineup</h1>
+      <p class="tagline">Pin a reading, change your network, pin another. If the ID below
+        stays the same, the site still knows you are the same person — whatever your IP says.</p>
+    </div>
+    <button class="theme-btn" id="theme">Theme</button>
+  </header>
+
+  <section class="reading">
+    <div class="reading-top">
+      <div>
+        <div class="field-label">This browser's fingerprint</div>
+        <div class="hash pending" id="hash">reading&nbsp;signals…</div>
+      </div>
+      <div class="readout">
+        <div class="metric">
+          <div class="metric-n" id="m-signals">—</div>
+          <div class="metric-l">signals collected</div>
+        </div>
+        <div class="metric">
+          <div class="metric-n" id="m-pins">0</div>
+          <div class="metric-l">readings pinned</div>
+        </div>
+      </div>
+    </div>
+    <div class="capture">
+      <label class="ctl">
+        <span>Label this reading</span>
+        <select id="label">
+          <option>No VPN</option>
+          <option>Mullvad VPN on</option>
+          <option>Mullvad VPN — other country</option>
+          <option>Mullvad Browser + VPN</option>
+          <option>Incognito / private window</option>
+          <option>Other browser</option>
+        </select>
+      </label>
+      <label class="ctl">
+        <span>IP address (from mullvad.net/check)</span>
+        <input type="text" id="ip" placeholder="optional — e.g. 193.32.127.…" spellcheck="false">
+      </label>
+      <button class="btn" id="pin">Pin this reading</button>
+      <div class="spacer"></div>
+      <button class="btn btn-ghost btn-sm" id="reread">Re-read</button>
+      <button class="btn btn-ghost btn-sm" id="clear">Clear lineup</button>
+    </div>
+  </section>
+
+  <div id="verdict"></div>
+
+  <section style="display:flex;flex-direction:column;gap:14px">
+    <div class="section-head">
+      <h2>The lineup</h2>
+      <p class="hint" id="lineup-hint">Three readings make the point. Pin them in order.</p>
+    </div>
+    <div id="lineup"></div>
+  </section>
+
+  <section class="signals">
+    <div class="sig-head">
+      <h2>What the fingerprint is made of</h2>
+      <p class="hint" id="sig-hint">Live values from this browser, right now.</p>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Signal</th>
+            <th>Value in this browser</th>
+            <th class="sig-state">Across lineup</th>
+          </tr>
+        </thead>
+        <tbody id="sigbody"></tbody>
+      </table>
+    </div>
+    <div class="transfer">
+      <label class="ctl" style="flex:1 1 260px">
+        <span>Move a reading between browsers</span>
+        <input type="text" id="code" placeholder="paste a transfer code here" spellcheck="false">
+      </label>
+      <button class="btn btn-ghost btn-sm" id="import">Import code</button>
+      <button class="btn btn-ghost btn-sm" id="export">Copy my lineup</button>
+      <span class="toast" id="toast"></span>
+    </div>
+  </section>
+
+  <footer>
+    <p><strong>How to record the demo.</strong> Open this page with the VPN off and pin a
+    reading. Turn Mullvad VPN on, reload, check your new IP at
+    <a href="https://mullvad.net/check">mullvad.net/check</a>, and pin a second reading. The IP
+    changes; the fingerprint does not. Then open this same page in Mullvad Browser, copy the
+    transfer code from your first browser, import it, and pin a third — that one finally moves.</p>
+    <p>Everything is computed in your browser and stored only in this browser. Nothing is sent
+    anywhere. The ID is a hash of the signals listed above; it is a stable label for this
+    browser configuration, not a measure of how rare you are. For a population-based estimate
+    of that, use <a href="https://coveryourtracks.eff.org/">EFF Cover Your Tracks</a>.</p>
+  </footer>
+</div>
+
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const KEY = "fp-lineup-v1";
+
+/* ---------- hashing ---------- */
+function fnv(str, seed){
+  let h = seed >>> 0;
+  for (let i = 0; i < str.length; i++){
+    h ^= str.charCodeAt(i);
+    h = Math.imul(h, 16777619) >>> 0;
+  }
+  return h >>> 0;
+}
+const hex8 = n => n.toString(16).toUpperCase().padStart(8, "0");
+function fpHash(str){
+  return (hex8(fnv(str, 2166136261)) + hex8(fnv(str, 1099511628211 % 4294967296))).slice(0, 12);
+}
+function prettyHash(h){
+  const parts = h.match(/.{1,4}/g) || [h];
+  return parts.join('<span class="sep">·</span>');
+}
+
+/* ---------- signal collection ---------- */
+function canvasSig(){
+  try{
+    const c = document.createElement("canvas");
+    c.width = 260; c.height = 62;
+    const x = c.getContext("2d");
+    if (!x) return "unavailable";
+    const g = x.createLinearGradient(0, 0, 260, 0);
+    g.addColorStop(0, "#B87400"); g.addColorStop(1, "#1E7A56");
+    x.fillStyle = g; x.fillRect(0, 0, 260, 62);
+    x.font = "17px 'Arial'"; x.fillStyle = "rgba(20,30,50,0.82)";
+    x.fillText("Lineup \u{1F50E} fingerprint 0123", 6, 24);
+    x.font = "13px 'Times New Roman'"; x.fillStyle = "rgba(255,255,255,0.9)";
+    x.fillText("générique — äöü ∑∞", 6, 46);
+    x.globalCompositeOperation = "multiply";
+    x.beginPath(); x.arc(210, 30, 22, 0, Math.PI * 2); x.fillStyle = "#4ECB94"; x.fill();
+    return fpHash(c.toDataURL());
+  }catch(e){ return "blocked"; }
+}
+function webglInfo(){
+  const out = { vendor: "unavailable", renderer: "unavailable", params: "unavailable" };
+  try{
+    const c = document.createElement("canvas");
+    const gl = c.getContext("webgl") || c.getContext("experimental-webgl");
+    if (!gl) return out;
+    const dbg = gl.getExtension("WEBGL_debug_renderer_info");
+    out.vendor = dbg ? String(gl.getParameter(dbg.UNMASKED_VENDOR_WEBGL)) : String(gl.getParameter(gl.VENDOR));
+    out.renderer = dbg ? String(gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL)) : String(gl.getParameter(gl.RENDERER));
+    const ps = [gl.MAX_TEXTURE_SIZE, gl.MAX_RENDERBUFFER_SIZE, gl.MAX_VERTEX_ATTRIBS,
+                gl.MAX_VARYING_VECTORS, gl.MAX_VERTEX_UNIFORM_VECTORS, gl.ALIASED_LINE_WIDTH_RANGE]
+      .map(p => { try { return String(gl.getParameter(p)); } catch(e){ return "?"; } }).join("|");
+    const ext = (gl.getSupportedExtensions() || []).length;
+    out.params = fpHash(ps + "/" + ext) + " (" + ext + " ext)";
+  }catch(e){}
+  return out;
+}
+function fontSig(){
+  try{
+    const probes = ["Arial","Arial Black","Bahnschrift","Calibri","Cambria","Candara","Comic Sans MS",
+      "Consolas","Constantia","Corbel","Courier New","Ebrima","Franklin Gothic","Gabriola","Gadugi",
+      "Georgia","Helvetica","Impact","Ink Free","Javanese Text","Leelawadee UI","Lucida Console",
+      "Malgun Gothic","Marlett","Microsoft Himalaya","MS Gothic","MV Boli","Myanmar Text",
+      "Nirmala UI","Palatino Linotype","Segoe Print","Segoe Script","Segoe UI","SimSun",
+      "Sitka","Sylfaen","Symbol","Tahoma","Times New Roman","Trebuchet MS","Verdana","Webdings",
+      "Wingdings","Menlo","Monaco","Optima","Papyrus","Baskerville","Futura","Geneva",
+      "Andale Mono","DejaVu Sans","Liberation Sans","Ubuntu","Cantarell","Noto Sans"];
+    const base = ["monospace","serif","sans-serif"];
+    const c = document.createElement("canvas");
+    const x = c.getContext("2d");
+    if (!x) return { count: 0, hash: "unavailable" };
+    const text = "mmmmmmmmmmlliÆWQ08";
+    const ref = {};
+    base.forEach(b => { x.font = "72px " + b; ref[b] = x.measureText(text).width; });
+    const found = [];
+    probes.forEach(f => {
+      for (const b of base){
+        x.font = '72px "' + f + '",' + b;
+        if (Math.abs(x.measureText(text).width - ref[b]) > 0.3){ found.push(f); break; }
+      }
+    });
+    return { count: found.length, hash: fpHash(found.join(",")), list: found };
+  }catch(e){ return { count: 0, hash: "blocked", list: [] }; }
+}
+function audioSig(){
+  return new Promise(resolve => {
+    try{
+      const AC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+      if (!AC) return resolve("unavailable");
+      const ctx = new AC(1, 44100, 44100);
+      const osc = ctx.createOscillator();
+      osc.type = "triangle";
+      osc.frequency.value = 10000;
+      const comp = ctx.createDynamicsCompressor();
+      comp.threshold.value = -50; comp.knee.value = 40; comp.ratio.value = 12;
+      comp.attack.value = 0; comp.release.value = 0.25;
+      osc.connect(comp); comp.connect(ctx.destination);
+      osc.start(0);
+      const done = setTimeout(() => resolve("timed out"), 1200);
+      ctx.startRendering().then(buf => {
+        clearTimeout(done);
+        const d = buf.getChannelData(0);
+        let sum = 0;
+        for (let i = 4500; i < 5500; i++) sum += Math.abs(d[i]);
+        resolve(fpHash(sum.toFixed(9)));
+      }).catch(() => { clearTimeout(done); resolve("blocked"); });
+    }catch(e){ resolve("blocked"); }
+  });
+}
+const mq = q => { try { return window.matchMedia(q).matches ? "yes" : "no"; } catch(e){ return "?"; } };
+
+async function collect(){
+  const w = window, n = navigator, s = screen;
+  const gl = webglInfo();
+  const fonts = fontSig();
+  const audio = await audioSig();
+  let tz = "?", intl = "?";
+  try{ tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "?"; }catch(e){}
+  try{
+    intl = new Intl.NumberFormat().format(1234567.891) + " / " +
+           new Intl.DateTimeFormat(undefined, { dateStyle: "long" }).format(new Date(0));
+  }catch(e){}
+
+  return [
+    ["Display", "Screen resolution",   s.width + " × " + s.height],
+    ["Display", "Available screen",    s.availWidth + " × " + s.availHeight],
+    ["Display", "Window size",         w.innerWidth + " × " + w.innerHeight],
+    ["Display", "Colour depth",        s.colorDepth + "-bit"],
+    ["Display", "Pixel ratio",         String(w.devicePixelRatio || 1)],
+    ["Display", "Colour scheme",       mq("(prefers-color-scheme: dark)") === "yes" ? "dark" : "light"],
+    ["Display", "Reduced motion",      mq("(prefers-reduced-motion: reduce)")],
+
+    ["Hardware", "CPU cores",          String(n.hardwareConcurrency ?? "hidden")],
+    ["Hardware", "Device memory",      n.deviceMemory ? n.deviceMemory + " GB" : "hidden"],
+    ["Hardware", "Touch points",       String(n.maxTouchPoints ?? "?")],
+    ["Hardware", "Platform",           String(n.platform || "hidden")],
+
+    ["Locale", "Timezone",             tz],
+    ["Locale", "UTC offset",           String(-new Date().getTimezoneOffset() / 60)],
+    ["Locale", "Language",             String(n.language || "?")],
+    ["Locale", "Language list",        (n.languages || []).join(", ") || "?"],
+    ["Locale", "Number & date format", intl],
+
+    ["Rendering", "Canvas hash",       canvasSig()],
+    ["Rendering", "Audio hash",        audio],
+    ["Rendering", "WebGL vendor",      gl.vendor],
+    ["Rendering", "WebGL renderer",    gl.renderer],
+    ["Rendering", "WebGL parameters",  gl.params],
+    ["Rendering", "Fonts detected",    fonts.count + " of 56 — set " + fonts.hash],
+
+    ["Browser", "User agent",          String(n.userAgent || "?")],
+    ["Browser", "Do Not Track",        String(n.doNotTrack ?? "unset")],
+    ["Browser", "Cookies enabled",     n.cookieEnabled ? "yes" : "no"],
+    ["Browser", "PDF viewer",          n.pdfViewerEnabled === undefined ? "?" : (n.pdfViewerEnabled ? "yes" : "no")]
+  ].map(([group, name, value]) => ({ group, name, value: String(value) }));
+}
+
+/* ---------- state ---------- */
+let current = { hash: "", signals: [] };
+let pins = [];
+
+function load(){
+  try{
+    const raw = localStorage.getItem(KEY);
+    if (raw) pins = JSON.parse(raw) || [];
+  }catch(e){ pins = []; }
+  if (!Array.isArray(pins)) pins = [];
+}
+function save(){
+  try{ localStorage.setItem(KEY, JSON.stringify(pins)); }catch(e){}
+}
+
+/* ---------- rendering ---------- */
+function esc(s){
+  return String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c]));
+}
+
+function renderReading(){
+  $("hash").classList.remove("pending");
+  $("hash").innerHTML = prettyHash(current.hash);
+  $("m-signals").textContent = current.signals.length;
+  $("m-pins").textContent = pins.length;
+}
+
+function renderVerdict(){
+  const el = $("verdict");
+  if (pins.length === 0){ el.innerHTML = ""; return; }
+
+  const hashes = pins.map(p => p.hash);
+  const uniqueH = [...new Set(hashes)];
+  const ips = pins.map(p => p.ip).filter(Boolean);
+  const uniqueIP = [...new Set(ips)];
+
+  let cls = "", mark = "", title = "", note = "";
+
+  if (pins.length === 1){
+    mark = "1 of 2";
+    title = "One reading pinned.";
+    note = "Now change something — turn Mullvad VPN on, or switch country — reload this page, " +
+           "and pin a second reading. The comparison is the point.";
+  } else if (uniqueH.length === 1){
+    cls = "is-alert"; mark = "Trackable";
+    title = "Same fingerprint across " + pins.length + " readings.";
+    note = uniqueIP.length > 1
+      ? "You browsed from " + uniqueIP.length + " different IP addresses and every site you " +
+        "visited could still tell it was the same browser. Changing your IP changed one signal. " +
+        "The other " + (current.signals.length - 1) + " gave you away."
+      : "Every reading produced an identical ID. Add the IP address to each reading to show " +
+        "that the network changed while the fingerprint did not.";
+  } else if (uniqueH.length === pins.length){
+    cls = "is-ok"; mark = "Distinct";
+    title = "All " + pins.length + " readings look like different browsers.";
+    note = "No two readings share an ID, so nothing here links them together. This is what a " +
+           "fingerprint-resistant browser is for — and note that switching to one, not switching " +
+           "IP, is what moved the number.";
+  } else {
+    cls = "is-alert"; mark = "Partly linked";
+    title = uniqueH.length + " distinct fingerprints across " + pins.length + " readings.";
+    note = "Some of these readings are still linkable to each other. Any two cards sharing an ID " +
+           "are the same browser as far as every website is concerned.";
+  }
+
+  el.innerHTML =
+    '<div class="verdict ' + cls + '">' +
+      '<div class="verdict-mark">' + esc(mark) + "</div>" +
+      '<div class="verdict-body">' +
+        '<p class="verdict-title">' + esc(title) + "</p>" +
+        '<p class="verdict-note">' + esc(note) + "</p>" +
+      "</div>" +
+    "</div>";
+}
+
+const GHOSTS = [
+  ["01", "No VPN", "Your real IP, your real fingerprint. The baseline."],
+  ["02", "Mullvad VPN on", "New IP. Watch what happens to the ID."],
+  ["03", "Mullvad Browser + VPN", "The only step that changes the fingerprint."]
+];
+
+function renderLineup(){
+  const el = $("lineup");
+  $("m-pins").textContent = pins.length;
+
+  if (pins.length === 0){
+    el.className = "ghosts";
+    el.innerHTML = GHOSTS.map(([seq, name, note]) =>
+      '<div class="ghost"><div class="ghost-seq">' + seq + "</div>" +
+      '<div class="ghost-name">' + esc(name) + "</div>" +
+      '<p class="ghost-note">' + esc(note) + "</p></div>").join("");
+    $("lineup-hint").textContent = "Three readings make the point. Pin them in order.";
+    return;
+  }
+
+  el.className = "lineup";
+  const counts = {};
+  pins.forEach(p => counts[p.hash] = (counts[p.hash] || 0) + 1);
+
+  el.innerHTML = pins.map((p, i) => {
+    const shared = counts[p.hash] > 1;
+    return '<div class="card">' +
+      '<div class="card-head">' +
+        "<div>" +
+          '<div class="card-seq">' + String(i + 1).padStart(2, "0") + "</div>" +
+          '<p class="card-name">' + esc(p.label) + "</p>" +
+        "</div>" +
+        '<button class="x" data-del="' + i + '" title="Remove reading">×</button>' +
+      "</div>" +
+      '<div class="card-hash">' + prettyHash(p.hash) + "</div>" +
+      '<span class="tag ' + (shared ? "tag-same" : "tag-uniq") + '">' +
+        (shared ? "matches " + (counts[p.hash] - 1) + " other" : "unique here") + "</span>" +
+      '<div class="card-rows">' +
+        '<div class="card-row"><span>IP address</span><b>' + esc(p.ip || "not noted") + "</b></div>" +
+        '<div class="card-row"><span>Screen</span><b>' + esc(p.screen) + "</b></div>" +
+        '<div class="card-row"><span>Timezone</span><b>' + esc(p.tz) + "</b></div>" +
+        '<div class="card-row"><span>Pinned</span><b>' + esc(p.time) + "</b></div>" +
+      "</div>" +
+    "</div>";
+  }).join("");
+
+  el.querySelectorAll("[data-del]").forEach(b => {
+    b.addEventListener("click", () => {
+      pins.splice(Number(b.dataset.del), 1);
+      save(); renderAll();
+    });
+  });
+
+  $("lineup-hint").textContent = pins.length === 1
+    ? "Change your network, reload, and pin the next one."
+    : pins.length + " readings pinned. Cards sharing an ID are the same browser.";
+}
+
+function renderSignals(){
+  const body = $("sigbody");
+  const rows = [];
+  let group = "";
+
+  const varies = {};
+  if (pins.length > 1){
+    current.signals.forEach(sig => {
+      const vals = pins.map(p => (p.signals || {})[sig.name]).filter(v => v !== undefined);
+      varies[sig.name] = vals.length > 1 ? new Set(vals).size > 1 : null;
+    });
+  }
+
+  current.signals.forEach(sig => {
+    if (sig.group !== group){
+      group = sig.group;
+      rows.push('<tr class="sig-group"><td colspan="3">' + esc(group) + "</td></tr>");
+    }
+    let chip = '<span class="chip chip-idle">—</span>';
+    if (varies[sig.name] === true)  chip = '<span class="chip chip-varies">changed</span>';
+    if (varies[sig.name] === false) chip = '<span class="chip chip-stable">identical</span>';
+    rows.push(
+      "<tr>" +
+        '<td class="sig-name">' + esc(sig.name) + "</td>" +
+        '<td class="sig-val">' + esc(sig.value) + "</td>" +
+        '<td class="sig-state">' + chip + "</td>" +
+      "</tr>");
+  });
+
+  body.innerHTML = rows.join("");
+  $("sig-hint").textContent = pins.length > 1
+    ? "Live values, with how each one behaved across your " + pins.length + " pinned readings."
+    : "Live values from this browser, right now.";
+}
+
+function renderAll(){ renderReading(); renderVerdict(); renderLineup(); renderSignals(); }
+
+/* ---------- actions ---------- */
+function pin(){
+  const map = {};
+  current.signals.forEach(s => map[s.name] = s.value);
+  pins.push({
+    label: $("label").value,
+    ip: $("ip").value.trim(),
+    hash: current.hash,
+    screen: map["Screen resolution"] || "?",
+    tz: map["Timezone"] || "?",
+    time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+    signals: map
+  });
+  save();
+  $("ip").value = "";
+  renderAll();
+}
+
+function toast(msg){
+  const t = $("toast");
+  t.textContent = msg;
+  setTimeout(() => { t.textContent = ""; }, 2600);
+}
+function packUnicode(str){ return btoa(unescape(encodeURIComponent(str))); }
+function unpackUnicode(str){ return decodeURIComponent(escape(atob(str))); }
+
+async function read(){
+  current.signals = await collect();
+  current.hash = fpHash(current.signals.map(s => s.name + "=" + s.value).join(";"));
+  renderAll();
+}
+
+/* ---------- wire up ---------- */
+$("pin").addEventListener("click", pin);
+$("reread").addEventListener("click", () => {
+  $("hash").classList.add("pending");
+  $("hash").textContent = "reading signals…";
+  read();
+});
+$("clear").addEventListener("click", () => {
+  if (pins.length && !confirm("Remove all " + pins.length + " pinned readings?")) return;
+  pins = []; save(); renderAll();
+});
+$("export").addEventListener("click", () => {
+  if (!pins.length) return toast("Nothing pinned yet");
+  const code = packUnicode(JSON.stringify(pins));
+  $("code").value = code;
+  try{
+    navigator.clipboard.writeText(code).then(
+      () => toast("Copied — paste it in the other browser"),
+      () => toast("Select the code above and copy it"));
+  }catch(e){ toast("Select the code above and copy it"); }
+});
+$("import").addEventListener("click", () => {
+  const raw = $("code").value.trim();
+  if (!raw) return toast("Paste a transfer code first");
+  try{
+    const incoming = JSON.parse(unpackUnicode(raw));
+    if (!Array.isArray(incoming)) throw new Error("bad shape");
+    const seen = new Set(pins.map(p => p.hash + p.label + p.time));
+    let added = 0;
+    incoming.forEach(p => {
+      if (p && p.hash && !seen.has(p.hash + p.label + p.time)){ pins.push(p); added++; }
+    });
+    save(); renderAll();
+    $("code").value = "";
+    toast(added ? "Imported " + added + " reading" + (added > 1 ? "s" : "") : "Already here");
+  }catch(e){ toast("That code could not be read"); }
+});
+$("theme").addEventListener("click", () => {
+  const r = document.documentElement;
+  const dark = r.getAttribute("data-theme") === "dark" ||
+    (!r.getAttribute("data-theme") && matchMedia("(prefers-color-scheme: dark)").matches);
+  r.setAttribute("data-theme", dark ? "light" : "dark");
+});
+
+load();
+renderLineup();
+renderVerdict();
+read();
+</script>

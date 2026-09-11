@@ -83,11 +83,18 @@ no telemetry, nothing written to disk.
 
 ## Why Mullvad for both
 
-- **No account, no email, no name.** You get a 16-digit number. There is no personal data to
-  leak, subpoena, or breach.
+- **No account, no email, no name.** You press one button and get a 16-digit number — that
+  number *is* your account. There is no personal data to leak, subpoena, or breach, because
+  you were never asked for any.
+- **Proven, not promised.** In April 2023 Swedish police arrived with a search warrant for
+  customer data and left without searching and without taking anything — the data did not
+  exist. [The full story](docs/1-mullvad-vpn.md#proof-not-promises--the-april-2023-raid).
 - **Flat €5/month**, whether you buy one month or ten years. No countdown timers, no
   "83% off" pricing games.
-- **Cash accepted.** Literally mail an envelope. Also Monero and Bitcoin, plus normal cards.
+- **Cash accepted.** Literally mail an envelope of banknotes with a one-time payment token —
+  no financial institution involved at any point. Also Monero and Bitcoin (10% off), plus
+  normal cards. And it isn't a subscription: nothing auto-renews, no card on file, you just
+  top up time.
 - **Repeatedly audited** by third parties, publicly, with the reports published.
 - **RAM-only servers** — no disks to seize or forensically recover.
 - **Open source clients**, all on GitHub.
