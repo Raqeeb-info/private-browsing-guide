@@ -116,50 +116,20 @@ The protection is not in the browser. It is in the *crowd*. Do not leave the cro
 
 ## The pizza order
 
-If you only remember one thing from this page, make it this.
+You order pizza every Friday and **never give your name.** Large, thin crust, half pepperoni,
+extra garlic dip, cut into squares.
 
-You call the same pizza place every Friday. **You never give them your name.** You just order:
+Every one of those is ordinary. That *combination* is only you. So the shop doesn't need your
+name — you're the garlic dip guy. **That's your fingerprint.**
 
-> Large. Thin crust. Half pepperoni, half mushroom. Extra garlic dip. No oregano.
-> Cut into squares.
+Now move house. New address, new phone number, same order. *"Oh, it's you again."* **That's a
+VPN** — it changes the address, not the order. Blocked number is incognito. Same guy.
 
-Every single one of those is ordinary. Hundreds of people order large. Hundreds order thin
-crust. Extra garlic dip is on the menu for a reason.
+The only fix is to order plain cheese like everyone else. That's Mullvad Browser: it doesn't
+hide your order, it gives you everyone else's.
 
-But *that exact combination*? **You are the only person in the city who orders that.**
-
-So the shop doesn't need your name. They have something better: they have the
-square-cut-half-and-half-extra-garlic guy. You are a regular, and you never once told them who
-you were. **That is your browser fingerprint.** Screen size, timezone, fonts, GPU, language —
-each one boring, the combination unique.
-
-### Now move house
-
-New address. New phone number. You call and order the same thing.
-
-*"Oh — it's you again."*
-
-Your address changed. **Your order didn't.** That is exactly what a VPN does and does not do:
-it changes where the delivery goes, not what you asked for. A new IP with the same fingerprint
-is a new address with the same order, and the shop knows you the second you start talking.
-
-Call from a blocked number if you like — that's incognito mode. Same order. Same guy.
-
-### The only thing that actually works
-
-You stop ordering *your* pizza. You order what everybody else orders: **plain medium cheese,
-cut into normal slices.** Now you are one of four hundred identical orders that night, and
-nobody can pick you out of them.
-
-That is Mullvad Browser. It doesn't hide your order — it gives you *everyone else's order.*
-
-And notice the cost, because it is the real one: **no extra garlic dip.** The protection only
-works while your order is boring. The moment you ask for one custom thing, you are the garlic
-guy again.
-
-That is precisely why the rule in [Layer 2](2-mullvad-browser.md) is *don't install extensions
-and don't resize the window.* Every tweak is another topping, and every topping puts you back
-on the list.
+The catch is **no garlic dip.** Customize one thing and you're back on the list — which is
+exactly why [Layer 2](2-mullvad-browser.md) says don't install extensions.
 
 ---
 

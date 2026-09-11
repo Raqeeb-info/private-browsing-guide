@@ -41,41 +41,23 @@ The key point, said plainly:
 Quick punch line: **a VPN is a mask; a fingerprint is your name tag.** Most people are
 wearing the mask with the name tag still on.
 
-### The pizza order — spend 60 seconds here, it carries the whole video
+### The pizza order — 25 seconds, right after the demo fails
 
-Best used right after you show the cold-open demo failing. Deliver it slowly.
+> "You order pizza every Friday. You never give them your name. Large, thin crust, half
+> pepperoni, extra garlic dip, cut into squares.
+>
+> Every one of those is ordinary. That *combination* is only you. They don't need your name —
+> you're the garlic dip guy. That's your fingerprint.
+>
+> Now you move house. New address, new number. Same order. *'Oh, it's you again.'*
+>
+> That's a VPN. It changes the address, not the order.
+>
+> The only fix is to order plain cheese like everybody else. That's Mullvad Browser — it
+> doesn't hide your order, it gives you everyone else's. And the catch is no garlic dip.
+> Customize one thing and you're back on the list."
 
-> "You call the same pizza place every Friday. You never give them your name. You just order:
-> large, thin crust, half pepperoni half mushroom, extra garlic dip, no oregano, cut into
-> squares.
->
-> Every one of those is ordinary. Hundreds of people order large. Hundreds order thin crust.
-> But that exact *combination*? You're the only person in the city who orders that. So the
-> shop doesn't need your name — they've got something better. You're the
-> square-cut-half-and-half-extra-garlic guy. You're a regular, and you never told them who
-> you are.
->
-> That's your browser fingerprint.
->
-> Now — you move house. New address, new phone number. You call, you order the same thing.
-> *'Oh, it's you again.'*
->
-> Your address changed. Your order didn't. **That's a VPN.** It changes where the delivery
-> goes. It doesn't change what you asked for. Call from a blocked number if you want —
-> that's incognito. Same order, same guy.
->
-> So what actually works? You stop ordering *your* pizza. You order what everybody else
-> orders — plain medium cheese, normal slices. Now you're one of four hundred identical
-> orders that night and nobody can pick you out.
->
-> That's Mullvad Browser. It doesn't hide your order. It gives you everyone else's.
->
-> And here's the catch, and it's a real one — **no extra garlic dip.** It only works while
-> your order stays boring. Ask for one custom thing and you're the garlic guy again."
-
-Then land it: that last line is why "don't install extensions" is rule number two in Part 4.
-Call back to it when you get there — *"remember the garlic dip"* — and the rule needs no
-further explanation.
+Call back to it at rule 2 in Part 4 — *"remember the garlic dip"* — and the rule explains itself.
 
 ---
 
